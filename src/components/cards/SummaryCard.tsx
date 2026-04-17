@@ -10,11 +10,9 @@ export interface SummaryCardProps {
 }
 
 const SummaryCard = ({ text, score, icon: Icon }: SummaryCardProps) => {
-	const isMobile = useIsMobile();
 	return (
 		<Card
 			h={152}
-			w={isMobile ? 350 : 450}
 			className={cn('border-l-6', {
 				'border-red-700': text.toLocaleLowerCase() === 'critical',
 				'border-yellow-500': text.toLocaleLowerCase() === 'warning',

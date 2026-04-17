@@ -8,27 +8,30 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 const Hero = () => {
 	const isMobile = useIsMobile();
 	return (
-		<Flex className='py-10 md:py-24 items-center justify-between px-10 md:min-h-[90vh] w-full md:w-[90%] mx-auto'>
-			<div className='w-full'>
+		<Flex className='max-sm:p-5 py-10 md:py-24 items-center justify-between md:min-h-[90vh] w-full md:w-[90%] mx-auto'>
+			<div>
 				<Badge variant='light'>
 					<Flex align={'center'} gap={4}>
 						<div className='w-2 h-2 rounded-full bg-green-400 animate animate-pulse'></div>{' '}
 						AI ENGINE ONLINE
 					</Flex>
 				</Badge>
-				<h1 className='text-4xl md:text-[80px] font-extrabold font-public-sans leading-normal md:leading-26 mt-2 md:mt-10'>
+				<h1 className='text-[50px] max-sm:text-center md:text-[80px] font-extrabold font-public-sans leading-16 md:leading-26 mt-5 md:mt-10'>
 					Anticipating Critical <br />
 					<span className='text-primary-foreground italic'>Patient Shifts</span>
 					<br />
 					Before They Occur.
 				</h1>
-				<p className='w-[50%] mt-14'>
+				<p className='md:w-[50%] mt-14 max-sm:text-center'>
 					VitalSign AI leverages credentialed clinical data to provide
 					real-time, explainable scoring for early deterioration detection.
 					Built for clinical precision.
 				</p>
 
-				<Flex gap={20} className='mt-14 flex-col md:flex-row'>
+				<Flex
+					gap={20}
+					className='mt-14 flex-col md:flex-row max-sm:items-center'
+				>
 					<Button
 						color='#007f3b'
 						h={60}

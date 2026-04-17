@@ -24,12 +24,12 @@ const Framework = () => {
 	const isMobile = useIsMobile();
 	return (
 		<Flex
-			className='md:min-h-85.25 my-24 w-full md:w-[90%] mx-auto flex-col-reverse md:flex-row max-sm:p-4'
+			className='md:min-h-85.25 mt-10 py-10 md:py-24 w-full md:w-[90%] mx-auto flex-col-reverse md:flex-row max-sm:p-5'
 			justify='center'
 			gap={50}
 		>
 			<Flex
-				className='w-[50%] flex-col md:flex-row'
+				className='md:w-[50%] flex-col md:flex-row gap-10'
 				align={'center'}
 				justify={'space-evenly'}
 			>
@@ -42,7 +42,7 @@ const Framework = () => {
 					/>
 				))}
 			</Flex>
-			<Flex className='flex-col w-[50%] gap-10'>
+			<Flex className='flex-col md:w-[50%] gap-10'>
 				<Badge
 					variant='light'
 					className='bg-secondary text-primary'
@@ -50,10 +50,15 @@ const Framework = () => {
 				>
 					SAFE AI FRAMEWORK
 				</Badge>
-				<Text fw={'bolder'} fz={isMobile ? 20 : 45} lh={'h1'}>
+				<Text
+					fw={'bolder'}
+					fz={isMobile ? 35 : 45}
+					lh={'h1'}
+					className='max-sm:text-center'
+				>
 					Designed for Clinical Trust, Not Just Correlation.
 				</Text>
-				<Text>
+				<Text fz={isMobile ? 14 : ''}>
 					VitalSign AI doesn&apos;t just provide a number. We provide the Why.
 					Using advanced SHAP explainability, clinicians can see exactly which
 					parameters—respiratory rate, SpO2, or heart rate volatility—are
@@ -67,7 +72,7 @@ const Framework = () => {
 							<Avatar>+2</Avatar>
 						</Avatar.Group>
 					</div>
-					<aside className='italic'>
+					<aside className='italic text-sm'>
 						Trusted by lead registrars for secondary validation.
 					</aside>
 				</Flex>

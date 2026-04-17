@@ -20,7 +20,7 @@ const FrameworkCard = ({
 	h,
 }: FrameworkCardProps) => {
 	return (
-		<Card w={w ? w : 280} h={h ? h : 230} radius={'xl'} shadow='lg'>
+		<Card w={w ? w : ''} h={h ? h : ''} radius={'xl'} shadow='lg'>
 			<Flex direction={'column'} gap={20} className='w-full h-full py-5 px-3'>
 				<div
 					className={cn('w-fit p-2 bg-secondary/20 rounded-md', {

@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils';
-import { Card, Flex } from '@mantine/core';
+import { Flex } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
 import Image from 'next/image';
 
@@ -16,12 +16,10 @@ const CommandCard = ({ title, image, description, id }: CommandCardProps) => {
 	const { hovered, ref } = useHover();
 	return (
 		<>
-			<Flex direction={'column'} w={382} className='group'>
-				{/* <Card w={382} h={'auto'}>
-					<Card.Section> */}
+			<Flex direction={'column'} className='group'>
 				<div
 					className={cn(
-						'w-105 h-85 overflow-hidden object-contain transition-all ease-in-out duration-300',
+						'h-85 overflow-hidden object-contain transition-all ease-in-out duration-300',
 						{
 							'scale-105 cursor-pointer': hovered,
 							'h-125': id === 1,

@@ -1,5 +1,5 @@
+'use client';
 import { Badge, Flex, Text } from '@mantine/core';
-import React from 'react';
 import FrameworkCard from '../cards/FrameworkCard';
 import {
 	AudioLines,
@@ -7,6 +7,7 @@ import {
 	GaugeIcon,
 	SquareStack,
 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const INTEGRATIONS = [
 	{
@@ -30,15 +31,16 @@ const INTEGRATIONS = [
 ];
 
 const Integration = () => {
+	const isMobile = useIsMobile();
 	return (
-		<div className='bg-foreground/5 mt-10 py-20'>
+		<div className='bg-foreground/5 mt-10 md:py-20 w-full py-10'>
 			<Flex
-				className='min-h-85.25 w-[90%] mx-auto'
+				className='w-full md:w-[90%] mx-auto p-5'
 				justify='center'
 				gap={50}
 				direction={'column'}
 			>
-				<Flex className='flex-col w-[50%] gap-10 pl-14'>
+				<Flex className='flex-col md:w-[50%] gap-10 md:pl-14 max-sm:items-center max-sm:justify-center'>
 					<Badge
 						variant='light'
 						className='bg-secondary text-primary'
@@ -46,17 +48,26 @@ const Integration = () => {
 					>
 						AT-HOME HEALTHCARE
 					</Badge>
-					<Text fw={'bolder'} fz={45} lh={'h1'}>
+					<Text
+						fw={'bolder'}
+						fz={isMobile ? 35 : 45}
+						lh={'h1'}
+						ta={isMobile ? 'center' : 'left'}
+					>
 						Virtual Ward Integration
 					</Text>
-					<Text>
+					<Text ta={isMobile ? 'center' : 'left'}>
 						Facilitating hospital-level care in the comfort of a patient’s home.
 						VitalSign AI bridges the gap between acute care and community
 						monitoring, ensuring safety and efficiency through advanced remote
 						diagnostics.
 					</Text>
 				</Flex>
-				<Flex align={'center'} justify={'space-evenly'}>
+				<Flex
+					align={'center'}
+					justify={'space-evenly'}
+					className='max-sm:flex-col gap-10'
+				>
 					{INTEGRATIONS.map(({ title, description, icon }, _id) => (
 						<FrameworkCard
 							key={_id}
@@ -64,7 +75,7 @@ const Integration = () => {
 							title={title}
 							description={description}
 							icon={icon}
-							w={400}
+							w={isMobile ? 0 : 400}
 							h={269}
 						/>
 					))}

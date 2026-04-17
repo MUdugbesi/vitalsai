@@ -1,5 +1,8 @@
+'use client';
+
 import { Flex, Text } from '@mantine/core';
 import CommandCard, { CommandCardProps } from '../cards/CommandCard';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const COMMAND_ACTIONS: CommandCardProps[] = [
 	{
@@ -23,22 +26,19 @@ const COMMAND_ACTIONS: CommandCardProps[] = [
 ];
 
 const ClinicalCommand = () => {
+	const isMobile = useIsMobile();
 	return (
 		<Flex
-			className='min-h-85.25 w-[90%] mx-auto mt-10 py-20'
+			className='min-h-85.25 p-5 py-10 md:w-[90%] mx-auto mt-10 md:py-20'
 			justify='center'
 			gap={50}
 			direction={'column'}
 		>
-			<Flex
-				className='flex-col gap-5 pl-14'
-				align={'center'}
-				justify={'center'}
-			>
-				<Text fw={'bolder'} fz={45} lh={'h1'}>
+			<Flex className='flex-col gap-5' align={'center'} justify={'center'}>
+				<Text fw={'bolder'} fz={isMobile ? 35 : 45} lh={'h1'} ta={'center'}>
 					Clinical Command in Action
 				</Text>
-				<Text className='mx-auto w-[45%] text-center'>
+				<Text className='mx-auto md:w-[45%] text-center'>
 					Experience the interface designed for rapid decision-making and deep
 					physiological insight.
 				</Text>
@@ -47,7 +47,7 @@ const ClinicalCommand = () => {
 				align={'center'}
 				justify={'space-evenly'}
 				gap={50}
-				className='w-[90%] mx-auto mt-10'
+				className='w-[90%] mx-auto mt-10 max-sm:flex-col'
 			>
 				{COMMAND_ACTIONS.map(({ title, description, image }, _id) => (
 					<CommandCard
