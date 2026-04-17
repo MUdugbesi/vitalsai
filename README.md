@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+```mermaid
+graph LR
+    subgraph Raw_Tables ["MIMIC-IV Tables"]
+        A[(Patients)]
+        B[(Chartevents)]
+        C[(Admissions)]
+    end
 
-## Getting Started
+    subgraph Processing ["ETL Script (Python/SQL)"]
+        D[Join on subject_id]
+        E[Hourly Resampling]
+        F[Forward Fill Imputation]
+        G[NEWS2 Score Logic]
+    end
 
-First, run the development server:
+    subgraph Output ["ML Ready"]
+        H[Feature Matrix .parquet]
+        I[Target Labels .csv]
+    end
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+    A & B & C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H & I
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```mermaid
+graph TD
+    %% -- Data Sources & Ingestion --
+    subgraph Data_Source ["1. Data Layer (MIMIC-IV)"]
+        RawData[(MIMIC-IV <br/> GCS/Local)]
+        DemoData[(MIMIC-IV Demo <br/> Local CSV)]
+    end
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    %% -- Offline Training Pipeline --
+    subgraph Batch_Layer ["2. Batch Layer (Offline Training)"]
+        direction TB
+        IngestEngine[Python ETL <br/> Pandas/Spark]
+        FeatStore[Feature Engineering <br/> Temporal Windows/NEWS2]
+        ModelTrain[Model Training <br/> PyTorch/XGBoost]
+        SHAPGen[Explainability Engine <br/> SHAP]
+        ModelReg[(Model Registry <br/> MLflow/S3)]
+    end
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    %% -- Online Prediction Serving --
+    subgraph Serving_Layer ["3. Serving Layer (Real-time Simulation)"]
+        direction TB
+        TimeSeriesDB[(TimeSeries DB <br/> InfluxDB/Postgres)]
+        APIServer[Backend API <br/> FastAPI]
+        Cache[Cache <br/> Redis]
+    end
 
-## Learn More
+    %% -- Presentation --
+    subgraph Presentation_Layer ["4. Clinician Interface"]
+        direction RL
+        Dashboard[React Dashboard <br/> Tailwind/Recharts]
+    end
 
-To learn more about Next.js, take a look at the following resources:
+    %% -- Connections --
+    RawData --> IngestEngine
+    DemoData --> IngestEngine
+    IngestEngine --> FeatStore
+    FeatStore --> ModelTrain
+    ModelTrain --> SHAPGen
+    SHAPGen --> ModelReg
+    
+    ModelReg -.-> APIServer
+    TimeSeriesDB <--> APIServer
+    APIServer <--> Cache
+    APIServer <--> Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    %% -- Styling --
+    classDef main fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef db fill:#85C1E9,stroke:#333,stroke-width:1px,rx:10,ry:10;
+    classDef api fill:#F9E79F,stroke:#333,stroke-width:1px;
+    classDef ui fill:#ABEBC6,stroke:#333,stroke-width:1px;
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    class RawData,DemoData,TimeSeriesDB,ModelReg db;
+    class APIServer,IngestEngine,ModelTrain api;
+    class Dashboard ui;
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```mermaid
+graph TD
+    A[NHS Standard Header] --> B[Hero: Service Name & Login]
+    B --> C[Live Stats: Active Alerts & System Health]
+    C --> D[How it Works: Wearable -> AI -> Escalation]
+    D --> E[Regulatory Footer: Privacy, DTAC, Contact]
+```
